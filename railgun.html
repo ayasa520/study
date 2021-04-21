@@ -46,8 +46,12 @@
             overflow: hidden;
 
         }
-
+        @font-face{
+            font-family:'Kozuka Mincho Pr6N' ;
+            src:url('Kozuka Mincho Pr6N-Bold.otf');
+        }
         div {
+            
             font-family: 'Kozuka Mincho Pr6N';
             position: absolute;
             /*relative 相对于正常位置， absolute相对于父类*/
@@ -202,7 +206,6 @@
         <div class="content-tenth"></div>
     </section>
   
-    </script>
     <script>
         var text = document.querySelector("input");
         function generate(e) {
