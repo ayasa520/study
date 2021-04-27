@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>罗马数字和阿拉伯数字互换</title>
+    <style>
+        div {
+            width: 300px;
+            height: auto;
+            position: relative;
+            left: 50%;
+            margin-left: -120px;
+        }
+
+        input {
+            width: 180px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content" id="content">
+        <input class="roman" type="text" v-model="roman_num" placeholder="请输入罗马数字 (1~3999">
+        <button class="r2i" @click="r2i">罗转阿</button>
+        <br>
+        <input class="arab" type="text" v-model="arab_num" placeholder="请输入阿拉伯数字 (1~3999)">
+        <button class="i2r" @click="i2r">阿转罗</button>
+
+    </div>
+</body>
+<script src="node_modules/vue/dist/vue.min.js"></script>
+<script>
+    var app = new Vue({
+        el: "#content",
+        data: {
+            roman_num: '',
+            arab_num: '',
+            t: [
+                ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'],
+                ['', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC'],
+                ['', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM'],
+                ['', 'M', 'MM', 'MMM']
+            ]
+        },
+        methods: {
+            r2i: function () {
+                var rom = this.roman_num;
+                var res = 0;
+                for (var i = 3; i > -1; i--) {
+                    for (var j = this.t[i].length - 1; j > 0; j--) {
+                        var index = rom.search('^' + this.t[i][j]);
+                        if (index != -1) {
+                            res += j * 10 ** i;
+                            rom = rom.slice(this.t[i][j].length);
+                            break;
+                        }
+                    }
+                }
+                if (res == 0)
+                    alert("输入无效!");
+                else
+                    this.arab_num = res;
+            },
+            i2r: function () {
+                if (this.arab_num <= 0 || this.arab_num > 3999) {
+                    alert("数字范围:1~3999")
+                }
+                this.roman_num = this.t[3][(Math.floor(this.arab_num / 1000)) % 10] + this.t[2][(Math.floor(this.arab_num / 100)) % 10] + this.t[1][(Math.floor(this.arab_num / 10)) % 10] + this.t[0][this.arab_num % 10];
+            }
+
+        }
+    })
+</script>
+
+</html>
